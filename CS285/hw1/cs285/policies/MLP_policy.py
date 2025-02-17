@@ -93,12 +93,13 @@ class MLPPolicySL(BasePolicy, nn.Module, metaclass=abc.ABCMeta):
         self.learning_rate = learning_rate
         self.training = training
         self.nn_baseline = nn_baseline
-
+        
         self.mean_net = build_mlp(
             input_size=self.ob_dim,
             output_size=self.ac_dim,
             n_layers=self.n_layers, size=self.size,
         )
+        
         self.mean_net.to(ptu.device)
         self.logstd = nn.Parameter(
             torch.zeros(self.ac_dim, dtype=torch.float32, device=ptu.device)
@@ -130,6 +131,7 @@ class MLPPolicySL(BasePolicy, nn.Module, metaclass=abc.ABCMeta):
         # return more flexible objects, such as a
         # `torch.distributions.Distribution` object. It's up to you!
         return self.mean_net(observation) #DONE ,TO CHECK LATER
+    
         raise NotImplementedError
 
     def update(self, observations, actions):
