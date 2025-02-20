@@ -109,7 +109,7 @@ class MLPPolicySL(BasePolicy, nn.Module, metaclass=abc.ABCMeta):
             itertools.chain([self.logstd], self.mean_net.parameters()),
             self.learning_rate
         )
-        self.loss=nn.CrossEntropyLoss()
+        self.crit=nn.CrossEntropyLoss()
 
     def save(self, filepath):
         """
@@ -131,7 +131,7 @@ class MLPPolicySL(BasePolicy, nn.Module, metaclass=abc.ABCMeta):
         # return more flexible objects, such as a
         # `torch.distributions.Distribution` object. It's up to you!
         return self.mean_net(observation) #DONE ,TO CHECK LATER
-    
+
         raise NotImplementedError
 
     def update(self, observations, actions):
@@ -144,8 +144,12 @@ class MLPPolicySL(BasePolicy, nn.Module, metaclass=abc.ABCMeta):
             dict: 'Training Loss': supervised learning loss
         """
         # TODO: update the policy and return the loss
-        policy_actions=self.forward(observations)#DONE ,TO CHECK LATER
-        loss=self.loss(policy_actions,actions)#DONE ,TO CHECK LATER
+        policy_actions=self(observations)#DONE ,TO CHECK LATER
+        loss=self.crit(policy_actions,actions)#DONE ,TO CHECK LATER
+        self.optimizer.zero_grad()
+        loss.backward()
+        self.optimizer.step()
+
         return {
             # You can add extra logging information here, but keep this line
             'Training Loss': ptu.to_numpy(loss),
