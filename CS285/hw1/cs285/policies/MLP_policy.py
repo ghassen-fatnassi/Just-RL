@@ -109,7 +109,7 @@ class MLPPolicySL(BasePolicy, nn.Module, metaclass=abc.ABCMeta):
             itertools.chain([self.logstd], self.mean_net.parameters()),
             self.learning_rate
         )
-        self.crit=nn.CrossEntropyLoss()
+        self.crit=nn.MSELoss()
 
     def save(self, filepath):
         """
@@ -117,7 +117,7 @@ class MLPPolicySL(BasePolicy, nn.Module, metaclass=abc.ABCMeta):
         """
         torch.save(self.state_dict(), filepath)
 
-    def forward(self, observation: torch.FloatTensor) -> Any:
+    def forward(self, observation) -> Any:
         """
         Defines the forward pass of the network
 
@@ -129,8 +129,8 @@ class MLPPolicySL(BasePolicy, nn.Module, metaclass=abc.ABCMeta):
         # You can return anything you want, but you should be able to differentiate
         # through it. For example, you can return a torch.FloatTensor. You can also
         # return more flexible objects, such as a
-        # `torch.distributions.Distribution` object. It's up to you!
-        return self.mean_net(observation) #DONE ,TO CHECK LATER
+        # `torch.distributions.Distribution` object. It's up to you!""
+        return self.mean_net(torch.FloatTensor(observation)) #DONE ,TO CHECK LATER
 
         raise NotImplementedError
 
@@ -144,11 +144,11 @@ class MLPPolicySL(BasePolicy, nn.Module, metaclass=abc.ABCMeta):
             dict: 'Training Loss': supervised learning loss
         """
         # TODO: update the policy and return the loss
-        policy_actions=self(observations)#DONE ,TO CHECK LATER
-        loss=self.crit(policy_actions,actions)#DONE ,TO CHECK LATER
-        self.optimizer.zero_grad()
+        policy_actions=self.forward(torch.FloatTensor(observations))#DONE ,TO CHECK LATER
+        loss=self.crit(policy_actions,torch.FloatTensor(actions))#DONE ,TO CHECK LATER
         loss.backward()
         self.optimizer.step()
+        self.optimizer.zero_grad()
 
         return {
             # You can add extra logging information here, but keep this line

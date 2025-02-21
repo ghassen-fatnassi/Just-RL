@@ -12,7 +12,6 @@ import gym
 
 import numpy as np
 import torch
-
 from cs285.infrastructure import pytorch_util as ptu
 from cs285.infrastructure import utils
 from cs285.infrastructure.logger import Logger
@@ -153,7 +152,7 @@ def run_training_loop(params):
 
         # train agent (using sampled data from replay buffer)
         print('\nTraining agent using sampled data from replay buffer...')
-        training_logs = []
+        training_logs = []        
         for _ in range(params['num_agent_train_steps_per_iter']):
 
           # TODO: sample some data from replay_buffer
@@ -161,8 +160,8 @@ def run_training_loop(params):
           # HINT2: use np.random.permutation to sample random indices
           # HINT3: return corresponding data points from each array (i.e., not different indices from each array)
           # for imitation learning, we only need observations and actions.  
-          ob_batch, ac_batch = replay_buffer[:params['train_batch_size']]
-
+          shuffler=np.random.permutation(len(replay_buffer))[:params['train_batch_size']]
+          ob_batch, ac_batch = replay_buffer.obs[shuffler], replay_buffer.acs[shuffler]
           # use the sampled data to train an agent
           train_log = actor.update(ob_batch, ac_batch)
           training_logs.append(train_log)
@@ -230,7 +229,7 @@ def main():
                         default=100)  # number of sampled data points to be used per gradient/train step
 
     parser.add_argument('--n_layers', type=int, default=2)  # depth, of policy to be learned
-    parser.add_argument('--size', type=int, default=64)  # width of each layer, of policy to be learned
+    parser.add_argument('--size', type=int, default=128)  # width of each layer, of policy to be learned
     parser.add_argument('--learning_rate', '-lr', type=float, default=5e-3)  # LR for supervised learning
 
     parser.add_argument('--video_log_freq', type=int, default=5)

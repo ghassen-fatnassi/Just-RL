@@ -32,14 +32,12 @@ def sample_trajectory(env, policy, max_path_length, render=False):
             image_obs.append(cv2.resize(img, dsize=(250, 250), interpolation=cv2.INTER_CUBIC))
     
         # TODO use the most recent ob to decide what to do
-        ac =policy(ob) # HINT: this is a numpy array
-        ac = ac[0]
-
+        ac =policy.get_action(ob) # HINT: this is a numpy array
         # TODO: take that action and get reward and next ob
         next_ob, rew, done, _ = env.step(ac)
         # TODO rollout can end due to done, or due to max_path_length
         steps += 1
-        rollout_done =done or (steps==max_path_length)  # HINT: this is either 0 or 1
+        rollout_done =done or (steps>=max_path_length)  # HINT: this is either 0 or 1
         
         # record result of taking that action
         obs.append(ob)
@@ -77,7 +75,6 @@ def sample_trajectories(env, policy, min_timesteps_per_batch, max_path_length, r
         timesteps_this_batch += get_pathlength(path)
 
     return paths, timesteps_this_batch
-
 
 def sample_n_trajectories(env, policy, ntraj, max_path_length, render=False):
     """Collect ntraj rollouts."""
