@@ -16,7 +16,7 @@ A structured approach to RL fundamentals, covering **policy gradients, Q-learnin
 🟩🟩🟩🟩🟩⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜ (5/23 lectures completed)
 
 #### Implementations:
-- [ ] **Homework 1:** Imitation Learning [Write-Up](https://itgass.notion.site/LAB-1-WriteUp-Imitation-Learning-1919f1788efd8035baf8c06c76dc360a?pvs=73)
+- [x] **Homework 1:** Imitation Learning [Write-Up](https://itgass.notion.site/LAB-1-WriteUp-Imitation-Learning-1919f1788efd8035baf8c06c76dc360a?pvs=73)
 - [ ] **Homework 2:** Policy Gradients
 - [ ] **Homework 3:** Q-Learning & Actor-Critic
 - [ ] **Homework 4:** Model-Based RL
