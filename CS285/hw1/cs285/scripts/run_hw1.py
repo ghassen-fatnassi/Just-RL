@@ -18,7 +18,8 @@ from cs285.infrastructure.logger import Logger
 from cs285.infrastructure.replay_buffer import ReplayBuffer
 from cs285.policies.MLP_policy import MLPPolicySL
 from cs285.policies.loaded_gaussian_policy import LoadedGaussianPolicy
-
+import warnings
+warnings.filterwarnings("ignore", category=DeprecationWarning)
 
 # how many rollouts to save as videos to tensorboard
 MAX_NVIDEO = 2
@@ -116,7 +117,7 @@ def run_training_loop(params):
         print("\n\n********** Iteration %i ************"%itr)
 
         # decide if videos should be rendered/logged at this iteration
-        log_video = ((itr % params['video_log_freq'] == 0) and (params['video_log_freq'] != -1))
+        log_video = (((itr+1) % params['video_log_freq'] == 0) and (params['video_log_freq'] != -1))
         # decide if metrics should be logged
         log_metrics = (itr % params['scalar_log_freq'] == 0)
 
@@ -163,7 +164,7 @@ def run_training_loop(params):
           shuffler=np.random.permutation(len(replay_buffer))[:params['train_batch_size']]
           ob_batch, ac_batch = replay_buffer.obs[shuffler], replay_buffer.acs[shuffler]
           # use the sampled data to train an agent
-          train_log = actor.update(ob_batch, ac_batch)
+          train_log = actor.update(ob_batch, ac_batch) #backprop on the actor (learning policy)
           training_logs.append(train_log)
 
         # log/save
