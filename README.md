@@ -27,5 +27,6 @@ A structured approach to RL fundamentals, covering **policy gradients, Q-learnin
 ### **Beyond CS285: Advanced RL Implementations**
 
 This section includes implementations of classic and cutting-edge RL algorithms beyond Berkeley’s curriculum.
+On Hold Currently.
 
 ---
