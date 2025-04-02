@@ -13,10 +13,10 @@ The journey begins with **CS285: Deep Reinforcement Learning (Berkeley)**, but e
 A structured approach to RL fundamentals, covering **policy gradients, Q-learning, actor-critic methods, and beyond**.
 
 #### Lectures:
-🟩🟩🟩⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜ (3/23 lectures completed)
+🟩🟩🟩🟩🟩⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜ (5/23 lectures completed)
 
 #### Implementations:
-- [ ] **Homework 1:** Imitation Learning
+- [ ] **Homework 1:** Imitation Learning [Write-Up](https://www.notion.so/itgass/LAB-1-WriteUp-Imitation-Learning-1919f1788efd8035baf8c06c76dc360a)
 - [ ] **Homework 2:** Policy Gradients
 - [ ] **Homework 3:** Q-Learning & Actor-Critic
 - [ ] **Homework 4:** Model-Based RL
